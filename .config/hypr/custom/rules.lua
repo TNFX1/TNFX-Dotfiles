@@ -4,3 +4,5 @@
 
 -- Blur behind the see-through terminal (dots turn blur off for every window)
 hl.window_rule({match = {class = "^(kitty)$" }, no_blur = false })
+-- Blur behind Zen (Transparent Zen / Zen Internet mods)
+hl.window_rule({match = {class = "^(zen)$" }, no_blur = false })
