@@ -32,7 +32,3 @@ output_path = '~/.local/state/quickshell/user/generated/color.txt'
 [templates.wallpaper]
 input_path = '~/.config/matugen/templates/wallpaper.txt'
 output_path = '~/.local/state/quickshell/user/generated/wallpaper/path.txt'
-
-[templates.zen]
-input_path = '~/.config/matugen/templates/zen/userChrome.css'
-output_path = '~/.config/zen/b7yfyqqw.Default (release)/chrome/userChrome.css'
