@@ -33,10 +33,6 @@ output_path = '~/.local/state/quickshell/user/generated/color.txt'
 input_path = '~/.config/matugen/templates/wallpaper.txt'
 output_path = '~/.local/state/quickshell/user/generated/wallpaper/path.txt'
 
-[templates.discord]
-input_path = '~/.config/matugen/templates/discord/translucence-matugen.theme.css'
-output_path = '~/.config/Vencord/themes/translucence-matugen.theme.css'
-
 [templates.zen]
 input_path = '~/.config/matugen/templates/zen/userChrome.css'
 output_path = '~/.config/zen/b7yfyqqw.Default (release)/chrome/userChrome.css'
