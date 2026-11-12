@@ -2,3 +2,7 @@
 hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.env("NVD_BACKEND", "direct")
+
+-- White cursor for apps that read the env
+hl.env("XCURSOR_THEME", "Breeze_Light")
+hl.env("XCURSOR_SIZE", "24")
