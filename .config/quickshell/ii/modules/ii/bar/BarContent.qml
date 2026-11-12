@@ -122,6 +122,11 @@ Item { // Bar content region
                 visible: root.useShortenedForm < 2
                 Layout.fillWidth: true
             }
+
+            WeatherBar { // local: moved here from the right side
+                visible: Config.options.bar.weather.enable
+                Layout.fillWidth: true
+            }
         }
 
         VerticalBarSeparator {
@@ -329,15 +334,7 @@ Item { // Bar content region
                 Layout.fillHeight: true
             }
 
-            // Weather
-            Loader {
-                Layout.leftMargin: 4
-                active: Config.options.bar.weather.enable
-
-                sourceComponent: BarGroup {
-                    WeatherBar {}
-                }
-            }
+            // local: weather moved to leftCenterGroup
         }
     }
 }
