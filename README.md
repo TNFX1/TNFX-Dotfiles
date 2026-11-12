@@ -1,5 +1,7 @@
 # TNFX-Dotfiles
 
+![desktop](.github/screenshot.jpg)
+
 My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) (illogical-impulse, Quickshell) plus my own overrides.
 
 - **Laptop:** ASUS TUF Gaming A15 (RTX 4050, NVIDIA-only), 1920x1080 @ 144 Hz
@@ -13,14 +15,17 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 |---|---|
 | `.config/hypr/custom/` | My overrides; end-4 never overwrites this folder |
 | `custom/general.lua` | 144 Hz panel, Turkish keyboard, mouse speed, saturation shader |
-| `custom/rules.lua` | All windows float + centered, blur behind kitty |
-| `custom/execs.lua` | Cursor, power-mode popup |
+| `custom/rules.lua` | Blur behind kitty |
+| `custom/execs.lua` | Cursor |
+| `custom/keybinds.lua` | Fn+F4 cycles the power profile |
 | `custom/env.lua` | NVIDIA env vars |
 | `custom/shaders/saturation.frag` | Screen saturation (`SATURATION`, 1.0 = stock) |
-| `custom/scripts/power_profile_popup.sh` | Notification whenever the power profile changes (Fn+F4 on the TUF) |
+| `custom/scripts/cycle_power_profile.sh` | power-saver → balanced → performance |
 | `.config/illogical-impulse/config.json` | Shell settings: transparency, minimal bar, no AI/anime sidebar tabs, night light off |
 | `.config/quickshell/ii/modules/ii/bar/Resources.qml` | Patched: stops the resources group overflowing onto the workspaces |
+| `.config/quickshell/ii/modules/ii/onScreenDisplay/` | Patched: animated power-mode OSD, like KDE's |
 | `.config/kitty/kitty.conf` | `background_opacity 0.7` |
+| `.config/fastfetch/` | "TNFX Nord" fastfetch layout + logo |
 | `Pictures/Wallpapers/` | Wallpapers (credits below) |
 
 ## Install
