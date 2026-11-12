@@ -21,10 +21,12 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 | `custom/env.lua` | NVIDIA env vars |
 | `custom/shaders/saturation.frag` | Screen saturation (`SATURATION`, 1.0 = stock) |
 | `custom/scripts/cycle_power_profile.sh` | power-saver → balanced → performance |
-| `.config/illogical-impulse/config.json` | Shell settings: transparency, minimal bar, no AI/anime sidebar tabs, night light off |
+| `.config/illogical-impulse/config.json` | Shell settings: transparency, minimal bar, date `dd.MM.yyyy`, weather city, no AI/anime sidebar tabs, night light off |
 | `.config/quickshell/ii/modules/ii/bar/Resources.qml` | Patched: stops the resources group overflowing onto the workspaces |
+| `.config/quickshell/ii/modules/ii/bar/BarContent.qml` | Patched: date always next to the clock, weather moved to the left of the workspaces |
+| `.config/quickshell/ii/modules/common/Appearance.qml` | Patched: wider center bar groups (140 → 230 px) |
 | `.config/quickshell/ii/modules/ii/onScreenDisplay/` | Patched: animated power-mode OSD, like KDE's |
-| `.config/kitty/kitty.conf` | `background_opacity 0.7` |
+| `.config/kitty/kitty.conf` | `background_opacity 0.7`, cursor trail on every keystroke |
 | `.config/fastfetch/` | "TNFX Nord" fastfetch layout + logo |
 | `Resimler/Wallpapers/` | Wallpapers (credits below); `Resimler` is the Turkish XDG Pictures folder |
 
@@ -44,7 +46,7 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 ## Wallpaper credits
 
 Wallpapers belong to their artists. Sources:
-- [dharmx/walls](https://github.com/dharmx/walls) (`nord-*`)
+- [dharmx/walls](https://github.com/dharmx/walls) (`nord-*`, `anime-*`)
 - [D3Ext/aesthetic-wallpapers](https://github.com/D3Ext/aesthetic-wallpapers) (`cyberpunk_car`, `dark_skulls`, `rad_samurai`, `vader`, `neon-car2`, `oled-mountains`, `rm-rf`)
 - [wallhaven.cc](https://wallhaven.cc) (the rest)
 
