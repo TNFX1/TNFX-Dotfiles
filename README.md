@@ -26,7 +26,7 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 | `.config/quickshell/ii/modules/ii/onScreenDisplay/` | Patched: animated power-mode OSD, like KDE's |
 | `.config/kitty/kitty.conf` | `background_opacity 0.7` |
 | `.config/fastfetch/` | "TNFX Nord" fastfetch layout + logo |
-| `Pictures/Wallpapers/` | Wallpapers (credits below) |
+| `Resimler/Wallpapers/` | Wallpapers (credits below); `Resimler` is the Turkish XDG Pictures folder |
 
 ## Install
 

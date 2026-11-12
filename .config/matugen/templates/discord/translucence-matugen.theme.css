@@ -9,8 +9,8 @@
 @import url(https://capnkitten.github.io/BetterDiscord/Themes/Translucence/css/source.css);
 
 :root {
-	/* APP ELEMENTS: soft gradient of the wallpaper's surface and accent instead of a fixed image */
-	--app-bg: linear-gradient(135deg, {{colors.surface_container_lowest.default.hex}} 0%, {{colors.surface_container.default.hex}} 55%, {{colors.primary_container.default.hex}} 100%);
+	/* APP ELEMENTS: Translucence's own background picture; only the colors come from the wallpaper */
+	--app-bg: url(https://i.ibb.co/3mLxCxgt/Aritim-Dark-Wallpaper-1920x1080.jpg);
 	--app-blur: 6px;
 	--app-margin: 24px;
 	--app-radius: 8px;
