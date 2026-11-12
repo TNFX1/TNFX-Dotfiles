@@ -3,7 +3,7 @@ hl.monitor({
     output = "eDP-1",
     mode = "1920x1080@144",
     position = "auto",
-    scale = 1
+    scale = 1  -- 1.2 was too big; apps scaled individually (gsettings text-scaling, kitty font)
 })
 
 -- Turkish Q keyboard
