@@ -111,7 +111,7 @@ Item { // Bar content region
         BarGroup {
             id: leftCenterGroup
             anchors.verticalCenter: parent.verticalCenter
-            implicitWidth: root.centerSideModuleWidth
+            // local: size to content (no gaps); was root.centerSideModuleWidth
 
             Resources {
                 alwaysShowAllResources: root.useShortenedForm === 2
@@ -120,12 +120,10 @@ Item { // Bar content region
 
             Media {
                 visible: root.useShortenedForm < 2
-                Layout.fillWidth: true
             }
 
             WeatherBar { // local: moved here from the right side
                 visible: Config.options.bar.weather.enable
-                Layout.fillWidth: true
             }
         }
 
@@ -162,7 +160,7 @@ Item { // Bar content region
         MouseArea {
             id: rightCenterGroup
             anchors.verticalCenter: parent.verticalCenter
-            implicitWidth: Math.max(root.centerSideModuleWidth, rightCenterGroupContent.implicitWidth) // local: fit clock + date
+            implicitWidth: rightCenterGroupContent.implicitWidth // local: size to content (no gaps)
             implicitHeight: rightCenterGroupContent.implicitHeight
 
             onPressed: {
@@ -176,7 +174,6 @@ Item { // Bar content region
                 ClockWidget {
                     showDate: root.useShortenedForm < 2 // local: always show date
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.fillWidth: true
                 }
 
                 UtilButtons {
