@@ -32,3 +32,19 @@ output_path = '~/.local/state/quickshell/user/generated/color.txt'
 [templates.wallpaper]
 input_path = '~/.config/matugen/templates/wallpaper.txt'
 output_path = '~/.local/state/quickshell/user/generated/wallpaper/path.txt'
+
+[templates.spicetify]
+input_path = '~/.config/matugen/templates/spicetify/color.ini'
+output_path = '~/.config/spicetify/Themes/Matugen/color.ini'
+
+[templates.discord]
+input_path = '~/.config/matugen/templates/discord/matugen.theme.css'
+output_path = '~/.config/Vencord/themes/matugen.theme.css'
+
+[templates.zen]
+input_path = '~/.config/matugen/templates/zen/userChrome.css'
+output_path = '~/.config/zen/b7yfyqqw.Default (release)/chrome/userChrome.css'
+
+[templates.cava]
+input_path = '~/.config/matugen/templates/cava/config'
+output_path = '~/.config/cava/config'

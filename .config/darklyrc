@@ -1,0 +1,9 @@
+[Style]
+DolphinSidebarOpacity=55
+DolphinViewOpacity=65
+MenuBarOpacity=65
+MenuOpacity=75
+TabBarOpacity=65
+ToolBarOpacity=65
+TransparentDolphinView=true
+WidgetDrawShadow=false

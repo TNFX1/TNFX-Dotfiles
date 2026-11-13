@@ -82,23 +82,23 @@
     @define-color success_fg_color #D1E9D6;
     @define-color success_color #B5CCBA;
     /* Base surfaces */
-    @define-color window_bg_color {{colors.background.dark.hex}};
+    @define-color window_bg_color alpha({{colors.background.dark.hex}}, 0.75); /* LOCAL EDIT: see-through + Hyprland blur */
     @define-color window_fg_color {{colors.on_background.dark.hex}};
-    @define-color headerbar_bg_color {{colors.surface_container.dark.hex}};
-    @define-color headerbar_backdrop_color {{colors.surface_container.dark.hex}};
+    @define-color headerbar_bg_color alpha({{colors.surface_container.dark.hex}}, 0.8); /* LOCAL EDIT: see-through + Hyprland blur */
+    @define-color headerbar_backdrop_color alpha({{colors.surface_container.dark.hex}}, 0.8); /* LOCAL EDIT: see-through + Hyprland blur */
     @define-color headerbar_fg_color {{colors.on_surface.dark.hex}};
     @define-color card_bg_color {{colors.surface_container.dark.hex}};
     @define-color card_fg_color {{colors.on_surface.dark.hex}};
-    @define-color sidebar_bg_color {{colors.background.dark.hex}};
+    @define-color sidebar_bg_color alpha({{colors.background.dark.hex}}, 0.65); /* LOCAL EDIT: see-through + Hyprland blur */
     @define-color sidebar_fg_color {{colors.on_surface.dark.hex}};
     @define-color sidebar_row_active_bg_color {{colors.secondary_container.dark.hex}};
     @define-color sidebar_row_active_fg_color {{colors.on_secondary_container.dark.hex}};
-    @define-color secondary_sidebar_bg_color {{colors.surface_container_low.dark.hex}};
+    @define-color secondary_sidebar_bg_color alpha({{colors.surface_container_low.dark.hex}}, 0.65); /* LOCAL EDIT: see-through + Hyprland blur */
     @define-color secondary_sidebar_backdrop_color {{colors.surface_container_low.dark.hex}};
     @define-color secondary_sidebar_fg_color {{colors.on_surface_variant.dark.hex}};
     @define-color sidebar_border_color @sidebar_bg_color;
     @define-color sidebar_backdrop_color @sidebar_bg_color;
-    @define-color view_bg_color {{colors.surface_container_lowest.dark.hex}};
+    @define-color view_bg_color alpha({{colors.surface_container_lowest.dark.hex}}, 0.7); /* LOCAL EDIT: see-through + Hyprland blur */
     @define-color view_fg_color {{colors.on_surface.dark.hex}};
     @define-color overview_bg_color {{colors.surface_container_lowest.dark.hex}};
     @define-color overview_fg_color {{colors.on_surface.dark.hex}};

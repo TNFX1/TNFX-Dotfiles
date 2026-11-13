@@ -14,20 +14,20 @@
 @define-color success_fg_color #D1E9D6;
 @define-color success_color #B5CCBA;
 /* Base surfaces */
-@define-color window_bg_color {{colors.background.default.hex}};
+@define-color window_bg_color alpha({{colors.background.default.hex}}, 0.75); /* LOCAL EDIT: see-through + Hyprland blur */
 @define-color window_fg_color {{colors.on_background.default.hex}};
-@define-color headerbar_bg_color {{colors.surface_container.default.hex}};
-@define-color headerbar_backdrop_color {{colors.surface_container.default.hex}};
+@define-color headerbar_bg_color alpha({{colors.surface_container.default.hex}}, 0.8); /* LOCAL EDIT: see-through + Hyprland blur */
+@define-color headerbar_backdrop_color alpha({{colors.surface_container.default.hex}}, 0.8); /* LOCAL EDIT: see-through + Hyprland blur */
 @define-color headerbar_fg_color {{colors.on_surface.default.hex}};
 @define-color card_bg_color {{colors.surface_container.default.hex}};
 @define-color card_fg_color {{colors.on_surface.default.hex}};
-@define-color sidebar_bg_color {{colors.surface_container.default.hex}};
+@define-color sidebar_bg_color alpha({{colors.surface_container.default.hex}}, 0.65); /* LOCAL EDIT: see-through + Hyprland blur */
 @define-color sidebar_fg_color {{colors.on_surface.default.hex}};
-@define-color secondary_sidebar_bg_color {{colors.surface_container_low.default.hex}};
+@define-color secondary_sidebar_bg_color alpha({{colors.surface_container_low.default.hex}}, 0.65); /* LOCAL EDIT: see-through + Hyprland blur */
 @define-color secondary_sidebar_fg_color {{colors.on_surface.default.hex}};
 @define-color sidebar_border_color @sidebar_bg_color;
 @define-color sidebar_backdrop_color @sidebar_bg_color;
-@define-color view_bg_color {{colors.surface_container_lowest.default.hex}};
+@define-color view_bg_color alpha({{colors.surface_container_lowest.default.hex}}, 0.7); /* LOCAL EDIT: see-through + Hyprland blur */
 @define-color view_fg_color {{colors.on_surface.default.hex}};
 @define-color overview_bg_color {{colors.surface_container_lowest.default.hex}};
 @define-color overview_fg_color {{colors.on_surface.default.hex}};

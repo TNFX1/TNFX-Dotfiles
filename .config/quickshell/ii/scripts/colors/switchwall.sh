@@ -57,6 +57,10 @@ post_process() {
 
     handle_kde_material_you_colors &
     "$SCRIPT_DIR/code/material-code-set-color.sh" &
+    # LOCAL EDIT: push the new matugen colors into Spotify (Spicetify "Matugen" theme); shows on next Spotify reload/restart
+    # LOCAL EDIT: fake blur + tint for Steam (Millennium QuickCSS) and Spotify (Spicetify), then push to Spotify; both show on next app start
+    { python3 "$SCRIPT_DIR/local/fakeblur_css.py"; [[ -x ~/.spicetify/spicetify ]] && ~/.spicetify/spicetify refresh -q; } &>/dev/null &
+    pkill -USR2 -x cava &>/dev/null  # LOCAL EDIT: cava reloads its (matugen) colors
 }
 
 check_and_prompt_upscale() {
