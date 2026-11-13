@@ -80,7 +80,7 @@
       "workspaceZoom": 1.07
     },
     "thumbnailPath": "",
-    "wallpaperPath": "/home/efeserdaroglu/Resimler/Wallpapers/autumn-fog-path.jpg",
+    "wallpaperPath": "/home/efeserdaroglu/Resimler/Wallpapers/ice-mountain-blue.jpg",
     "widgets": {
       "clock": {
         "cookie": {
@@ -463,7 +463,7 @@
     }
   },
   "sounds": {
-    "battery": true,
+    "battery": false,
     "pomodoro": false,
     "theme": "freedesktop"
   },
