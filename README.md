@@ -26,6 +26,8 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 | `.config/quickshell/ii/modules/ii/bar/BarContent.qml` | Patched: date always next to the clock, weather moved to the left of the workspaces |
 | `.config/quickshell/ii/modules/common/Appearance.qml` | Patched: wider center bar groups (140 → 230 px) |
 | `.config/quickshell/ii/modules/ii/onScreenDisplay/` | Patched: animated power-mode OSD, like KDE's |
+| `.config/quickshell/ii/modules/ii/lock/Lock.qml` | Patched: after a shell restart (Ctrl+Super+R) while locked, jumps back from the temporary lock workspace (2147483641-ish) to the real one |
+| `.config/hypr/hypridle.conf` | Screen back on after waking from sleep; on the charger the screen never turns off and the laptop never sleeps (lock still at 5 min) |
 | `.config/kitty/kitty.conf` | `background_opacity 0.7`, cursor trail on every keystroke |
 | `.config/fastfetch/` | "TNFX Nord" fastfetch layout + logo |
 | `Resimler/Wallpapers/` | Wallpapers (credits below); `Resimler` is the Turkish XDG Pictures folder |
