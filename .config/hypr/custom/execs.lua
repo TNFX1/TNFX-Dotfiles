@@ -8,3 +8,8 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("sleep 1 && hyprctl setcursor Breeze_Light 24")
     hl.exec_cmd("sleep 1 && gsettings set org.gnome.desktop.interface cursor-theme Breeze_Light")
 end)
+
+-- Fn+F5: push kernel profile changes to power-profiles-daemon at once (otherwise the OSD lags ~2 s)
+hl.on("hyprland.start", function ()
+    hl.exec_cmd(os.getenv("HOME") .. "/.config/hypr/custom/scripts/profile_sync.py")
+end)

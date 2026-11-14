@@ -88,7 +88,7 @@ Scope {
     }
 
     Connections {
-        // local edit: show the OSD when the power profile changes (Fn+F4, sidebar, CLI)
+        // local edit: show the OSD when the power profile changes (Fn+F5, sidebar, CLI)
         target: PowerProfiles
         function onProfileChanged() {
             root.protectionMessage = "";

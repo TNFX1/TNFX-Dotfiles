@@ -3,8 +3,5 @@
 -- See the corresponding files in ~/.config/hypr/hyprland for examples
 
 
--- Fn+F4 (ASUS sends KEY_PROG4 = xkb code 211): cycle power profile
-hl.bind("code:211", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/custom/scripts/cycle_power_profile.sh"), { locked = true, description = "System: Cycle power profile" })
-
 -- KDE Meta+P style display menu (SUPER+P is taken by "pin window")
 hl.bind("SUPER + ALT + P", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/custom/scripts/display_menu.sh"), { description = "System: Display mode menu" })

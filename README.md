@@ -21,7 +21,7 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 - **Same transparency everywhere.** Everything is about 60% opaque, like the bar. Steam and Spotify can't be truly see-through, so they get a fake blur: a blurred copy of the wallpaper drawn behind their panels.
 - **Minimal floating bar** with 5 workspace dots, the date next to the clock and the weather on the left.
 - **Sleep that works on NVIDIA.** The screen comes back after waking, and on the charger the screen never turns off and the laptop never sleeps.
-- **Power profile on Fn+F4** with an animated OSD, like KDE's.
+- **Power profile on Fn+F5** (the ASUS fan key) with an animated OSD, like KDE's, shown instantly.
 
 ## What's in here
 
@@ -30,11 +30,11 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 | `.config/hypr/custom/` | My overrides; end-4 never overwrites this folder |
 | `custom/general.lua` | 144 Hz panel, Turkish keyboard, mouse speed, saturation shader |
 | `custom/rules.lua` | Blur behind kitty and other see-through windows |
-| `custom/execs.lua` | Cursor |
-| `custom/keybinds.lua` | Fn+F4 cycles the power profile |
+| `custom/execs.lua` | Cursor, starts `profile_sync.py` |
+| `custom/keybinds.lua` | Super+Alt+P display mode menu |
 | `custom/env.lua` | NVIDIA env vars |
 | `custom/shaders/saturation.frag` | Screen saturation (`SATURATION`, 1.0 = stock) |
-| `custom/scripts/cycle_power_profile.sh` | power-saver → balanced → performance |
+| `custom/scripts/profile_sync.py` | Fn+F5 changes the profile in the kernel; this tells power-profiles-daemon at once so the OSD doesn't lag 2 s (started from `custom/execs.lua`) |
 | `.config/hypr/hypridle.conf` | Lock at 5 min; screen off at 10 and sleep at 15, but **not on the charger**; screen back on after waking |
 | `.config/illogical-impulse/config.json` | Shell settings: transparency, minimal bar, date `dd.MM.yyyy`, weather city, no AI/anime sidebar tabs |
 | `.config/quickshell/ii/modules/ii/bar/` | Patched: resources group no longer overflows onto the workspaces; date next to the clock, weather left of the workspaces |
