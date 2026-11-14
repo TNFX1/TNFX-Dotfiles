@@ -17,6 +17,11 @@ Scope {
     property var focusedScreen: Quickshell.screens.find(s => s.name === Hyprland.focusedMonitor?.name)
 
     property string currentIndicator: "volume"
+    // local edit: keyboard RGB state pushed by custom/scripts/kbd_rgb_mode.sh over IPC
+    property int kbdMode: 0
+    property string kbdColor: "#ff0000"
+    property string kbdColorName: ""
+    property int kbdBrightness: 3
     property var indicators: [
         {
             id: "volume",
@@ -33,6 +38,10 @@ Scope {
         {
             id: "power",
             sourceUrl: "indicators/PowerProfileIndicator.qml"
+        },
+        {
+            id: "keyboard",
+            sourceUrl: "indicators/KeyboardRgbIndicator.qml"
         },
     ]
 
@@ -231,6 +240,19 @@ Scope {
 
         function toggle() {
             GlobalStates.osdVolumeOpen = !GlobalStates.osdVolumeOpen;
+        }
+    }
+    IpcHandler {
+        target: "osdKeyboard"
+
+        function update(mode: int, color: string, colorName: string, brightness: int): void {
+            root.kbdBrightness = brightness;
+            root.kbdMode = mode;
+            root.kbdColor = color;
+            root.kbdColorName = colorName;
+            root.protectionMessage = "";
+            root.currentIndicator = "keyboard";
+            root.triggerOsd();
         }
     }
     GlobalShortcut {

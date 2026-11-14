@@ -13,3 +13,8 @@ end)
 hl.on("hyprland.start", function ()
     hl.exec_cmd(os.getenv("HOME") .. "/.config/hypr/custom/scripts/profile_sync.py")
 end)
+
+-- Keyboard backlight keys: show the keyboard OSD (kernel handles the keys, so watch sysfs)
+hl.on("hyprland.start", function ()
+    hl.exec_cmd(os.getenv("HOME") .. "/.config/hypr/custom/scripts/kbd_brightness_osd.py")
+end)

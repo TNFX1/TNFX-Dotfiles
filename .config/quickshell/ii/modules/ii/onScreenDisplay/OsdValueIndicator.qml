@@ -14,6 +14,10 @@ Item {
     property bool scaleIcon: false
     property alias from: valueProgressBar.from
     property alias to: valueProgressBar.to
+    // local edit: keyboard RGB indicator tints the icon/bar and waves the bar
+    property color iconColor: Appearance.colors.colOnLayer0
+    property alias barColor: valueProgressBar.highlightColor
+    property alias wavy: valueProgressBar.wavy
 
     property real valueIndicatorVerticalPadding: 9
     property real valueIndicatorLeftPadding: 10
@@ -56,7 +60,7 @@ Item {
                         centerIn: parent
                         alignWhenCentered: !root.rotateIcon
                     }
-                    color: Appearance.colors.colOnLayer0
+                    color: root.iconColor
                     renderType: Text.QtRendering
 
                     text: root.icon
