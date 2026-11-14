@@ -14,3 +14,6 @@ hl.window_rule({match = {class = "^(discord)$" }, no_blur = false })
 hl.window_rule({match = {class = ".*" }, no_blur = false })
 -- keep the dots exception: xwayland context menus without class/title
 hl.window_rule({match = {class = "^()$", title = "^()$" }, no_blur = true })
+
+-- Steam friends list always floats (title is localized: "Arkadaş Listesi" / "Friends List")
+hl.window_rule({match = {class = "^(steam)$", title = "^(Arkadaş Listesi|Friends List)$" }, float = true })
