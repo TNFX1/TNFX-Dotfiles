@@ -26,7 +26,7 @@
         "break",
         {
             "type": "title",
-            "format": "{#1}{#38;2;211;214;133}{user-name}{#0}{#90} @ {#1}{#38;2;233;235;194}{host-name}"
+            "format": "{#1}{#38;2;133;175;214}{user-name}{#0}{#90} @ {#1}{#38;2;194;215;235}{host-name}"
         },
         {
             "type": "custom",
@@ -35,60 +35,60 @@
         {
             "type": "os",
             "key": "├─  os",
-            "keyColor": "#D3D685",
+            "keyColor": "#85AFD6",
             "format": "{pretty-name}"
         },
         {
             "type": "kernel",
             "key": "├─  kernel",
-            "keyColor": "#E9EBC2",
+            "keyColor": "#C2D7EB",
             "format": "{release}"
         },
         {
             "type": "uptime",
             "key": "├─ 󰅐 uptime",
-            "keyColor": "#D3D685"
+            "keyColor": "#85AFD6"
         },
         {
             "type": "packages",
             "key": "├─ 󰏖 pkgs",
-            "keyColor": "#E9EBC2",
+            "keyColor": "#C2D7EB",
             "format": "{pacman}"
         },
         {
             "type": "wm",
             "key": "├─  wm",
-            "keyColor": "#D3D685",
+            "keyColor": "#85AFD6",
             "format": "{pretty-name}"
         },
         {
             "type": "shell",
             "key": "├─  shell",
-            "keyColor": "#E9EBC2",
+            "keyColor": "#C2D7EB",
             "format": "{pretty-name}"
         },
         {
             "type": "terminal",
             "key": "├─  term",
-            "keyColor": "#D3D685",
+            "keyColor": "#85AFD6",
             "format": "{pretty-name}"
         },
         {
             "type": "cpu",
             "key": "├─  cpu",
-            "keyColor": "#E9EBC2",
+            "keyColor": "#C2D7EB",
             "format": "{name}"
         },
         {
             "type": "gpu",
             "key": "├─ 󰍛 gpu",
-            "keyColor": "#D3D685",
+            "keyColor": "#85AFD6",
             "format": "{name}"
         },
         {
             "type": "memory",
             "key": "╰─  mem",
-            "keyColor": "#E9EBC2",
+            "keyColor": "#C2D7EB",
             "format": "{used} / {total}"
         },
         "break",
