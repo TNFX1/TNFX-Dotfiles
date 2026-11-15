@@ -24,7 +24,6 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 - **Power profile on Fn+F5** (the ASUS fan key) with an animated OSD, like KDE's, shown instantly.
 - **Keyboard light like Armoury Crate.** Fn+F4 cycles static → breathing → color cycle → strobe, Shift+Fn+F4 cycles the color, and the brightness keys show an OSD with a brightness bar.
 - **Laptop card at login** (and on Super+Alt+L): a small blurred card slides down showing the laptop with the current wallpaper on its screen and the keyboard in its real color and mode (dark when the light is off). A second card pops up when the charger is plugged in or out. These come from a separate local project, `~/Projeler/laptop-acilis`, which is **not** in this repo; without it the two `execs.lua` lines and the bind just do nothing.
-- **VPN daemons only when used.** Proton VPN and Mullvad don't start at boot; opening their app starts the daemon.
 
 ## What's in here
 
@@ -55,7 +54,6 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 | `.config/fastfetch/` | "TNFX Nord" fastfetch layout + logo, colored by the theme; includes system age (days since install) |
 | `.config/fish/functions/dot.fish` | `dot` = git for this repo (`dot status`, `dot add`, ...) |
 | `.local/share/applications/discord.desktop` | Discord at 1.10 scale |
-| `.local/share/applications/mullvad-vpn.desktop` | Starts `mullvad-daemon` before the app (needs the polkit rule below) |
 | `Resimler/Wallpapers/` | Wallpapers (credits below); `Resimler` is the Turkish XDG Pictures folder |
 
 ## Install
@@ -71,21 +69,11 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 
 `checkout -f` overwrites the files listed above. Back up your own copies first.
 
-Root-owned bits (not in the repo, add them by hand if you want those features):
+Root-owned bit (not in the repo, add it by hand if you want the keyboard light):
 
 - Keyboard light, `/etc/udev/rules.d/90-asus-kbd-rgb.rules`:
   ```
   ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="/bin/chmod 0222 /sys%p/kbd_rgb_mode"
-  ```
-- VPNs only on demand: `sudo systemctl disable --now proton.VPN.service mullvad-daemon.service`. Proton's app starts its daemon itself over D-Bus. For Mullvad, `/etc/polkit-1/rules.d/49-mullvad.rules` lets your user start it without a password (replace `YOUR_USER`):
-  ```js
-  polkit.addRule(function(action, subject) {
-      if (action.id == "org.freedesktop.systemd1.manage-units" &&
-          action.lookup("unit") == "mullvad-daemon.service" && subject.user == "YOUR_USER") {
-          var verb = action.lookup("verb");
-          if (verb == "start" || verb == "stop" || verb == "restart") return polkit.Result.YES;
-      }
-  });
   ```
 
 Optional, for the app theming: [Spicetify](https://spicetify.app) for Spotify, [Millennium](https://steambrew.app) (`millennium-git`) for Steam, and [Vencord](https://vencord.dev) for Discord (theme lands in `~/.config/Vencord/themes/`).
