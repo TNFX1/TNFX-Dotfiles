@@ -19,6 +19,7 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 
 - **One theme everywhere.** Changing the wallpaper recolors the shell, kitty, btop, cava, fastfetch, GTK/Qt, Zen, Discord, Spotify and Steam.
 - **Same transparency everywhere.** Everything is about 60% opaque, like the bar. Steam and Spotify can't be truly see-through, so they get a fake blur: a blurred copy of the wallpaper drawn behind their panels.
+- **Wallpaper transition.** A new wallpaper opens as a growing circle from the middle of the screen.
 - **Minimal floating bar** with 5 workspace dots, the date next to the clock and the weather on the left.
 - **Sleep that works on NVIDIA.** The screen comes back after waking, and on the charger the screen never locks, never turns off and the laptop never sleeps.
 - **Power profile on Fn+F5** (the ASUS fan key) with an animated OSD, like KDE's, shown instantly.
@@ -45,6 +46,7 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 | `.config/quickshell/ii/modules/ii/bar/` | Patched: resources group no longer overflows onto the workspaces; date next to the clock, weather left of the workspaces |
 | `.config/quickshell/ii/modules/common/Appearance.qml` | Patched: wider center bar groups (140 → 230 px) |
 | `.config/quickshell/ii/modules/ii/onScreenDisplay/` | Patched: animated power-mode OSD and keyboard-light OSD |
+| `.config/quickshell/ii/modules/ii/background/Background.qml` | Patched: circle-reveal transition when the wallpaper changes |
 | `.config/quickshell/ii/modules/ii/lock/Lock.qml` | Patched: if the shell restarts (Ctrl+Super+R) while locked, jump back from the temporary lock workspace (the 10-digit one) to the real one |
 | `.config/quickshell/ii/scripts/colors/switchwall.sh` | Runs the extra theming steps after a wallpaper change |
 | `.config/quickshell/ii/scripts/colors/local/fakeblur_css.py` | Fake-blur CSS for Steam (Millennium QuickCSS) and Spotify (Spicetify) |
