@@ -17,3 +17,13 @@ hl.window_rule({match = {class = "^()$", title = "^()$" }, no_blur = true })
 
 -- Steam friends list always floats (title is localized: "Arkadaş Listesi" / "Friends List")
 hl.window_rule({match = {class = "^(steam)$", title = "^(Arkadaş Listesi|Friends List)$" }, float = true })
+
+-- Laptop açılış pop-up'ı (~/Projeler/laptop-acilis): üstten kayan küçük, blurlu kart; odak çalmaz
+hl.window_rule({match = {class = "^(laptop-acilis)$" }, float = true, pin = true, no_initial_focus = true,
+    animation = "slide top", border_size = 0, no_shadow = true, no_blur = false, rounding = 18,
+    size = {"440", "320"}, move = {"(monitor_w*0.5-window_w*0.5)", "(monitor_h*0.07)"} })
+
+-- Şarj popup'ı (~/Projeler/laptop-acilis/sarj.py): üstten kayan küçük, blurlu kart; odak çalmaz
+hl.window_rule({match = {class = "^(sarj-popup)$" }, float = true, pin = true, no_initial_focus = true,
+    animation = "slide top", border_size = 0, no_shadow = true, no_blur = false, rounding = 18,
+    size = {"340", "96"}, move = {"(monitor_w*0.5-window_w*0.5)", "(monitor_h*0.07)"} })

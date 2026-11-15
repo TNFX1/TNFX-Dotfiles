@@ -18,3 +18,13 @@ end)
 hl.on("hyprland.start", function ()
     hl.exec_cmd(os.getenv("HOME") .. "/.config/hypr/custom/scripts/kbd_brightness_osd.py")
 end)
+
+-- Laptop açılış pop-up'ı (~/Projeler/laptop-acilis); sleep: önce duvar kâğıdı ve bar yüklensin
+hl.on("hyprland.start", function ()
+    hl.exec_cmd("sleep 2 && " .. os.getenv("HOME") .. "/Projeler/laptop-acilis/acilis.py")
+end)
+
+-- Şarj takılınca/çıkınca popup (~/Projeler/laptop-acilis/sarj.py, udev olaylarını dinler)
+hl.on("hyprland.start", function ()
+    hl.exec_cmd(os.getenv("HOME") .. "/Projeler/laptop-acilis/sarj.py --watch")
+end)

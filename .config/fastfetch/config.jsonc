@@ -26,7 +26,7 @@
         "break",
         {
             "type": "title",
-            "format": "{#1}{#38;2;133;175;214}{user-name}{#0}{#90} @ {#1}{#38;2;194;215;235}{host-name}"
+            "format": "{#1}{#38;2;214;165;133}{user-name}{#0}{#90} @ {#1}{#38;2;235;210;194}{host-name}"
         },
         {
             "type": "custom",
@@ -35,60 +35,68 @@
         {
             "type": "os",
             "key": "├─  os",
-            "keyColor": "#85AFD6",
+            "keyColor": "#D6A585",
             "format": "{pretty-name}"
         },
         {
             "type": "kernel",
             "key": "├─  kernel",
-            "keyColor": "#C2D7EB",
+            "keyColor": "#EBD2C2",
             "format": "{release}"
+        },
+        {
+            // root filesystem birth time = install date
+            "type": "disk",
+            "folders": "/",
+            "key": "├─ 󰃭 age",
+            "keyColor": "#D6A585",
+            "format": "{days} days"
         },
         {
             "type": "uptime",
             "key": "├─ 󰅐 uptime",
-            "keyColor": "#85AFD6"
+            "keyColor": "#EBD2C2"
         },
         {
             "type": "packages",
             "key": "├─ 󰏖 pkgs",
-            "keyColor": "#C2D7EB",
+            "keyColor": "#D6A585",
             "format": "{pacman}"
         },
         {
             "type": "wm",
             "key": "├─  wm",
-            "keyColor": "#85AFD6",
+            "keyColor": "#EBD2C2",
             "format": "{pretty-name}"
         },
         {
             "type": "shell",
             "key": "├─  shell",
-            "keyColor": "#C2D7EB",
+            "keyColor": "#D6A585",
             "format": "{pretty-name}"
         },
         {
             "type": "terminal",
             "key": "├─  term",
-            "keyColor": "#85AFD6",
+            "keyColor": "#EBD2C2",
             "format": "{pretty-name}"
         },
         {
             "type": "cpu",
             "key": "├─  cpu",
-            "keyColor": "#C2D7EB",
+            "keyColor": "#D6A585",
             "format": "{name}"
         },
         {
             "type": "gpu",
             "key": "├─ 󰍛 gpu",
-            "keyColor": "#85AFD6",
+            "keyColor": "#EBD2C2",
             "format": "{name}"
         },
         {
             "type": "memory",
             "key": "╰─  mem",
-            "keyColor": "#C2D7EB",
+            "keyColor": "#D6A585",
             "format": "{used} / {total}"
         },
         "break",

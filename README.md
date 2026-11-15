@@ -20,8 +20,11 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 - **One theme everywhere.** Changing the wallpaper recolors the shell, kitty, btop, cava, fastfetch, GTK/Qt, Zen, Discord, Spotify and Steam.
 - **Same transparency everywhere.** Everything is about 60% opaque, like the bar. Steam and Spotify can't be truly see-through, so they get a fake blur: a blurred copy of the wallpaper drawn behind their panels.
 - **Minimal floating bar** with 5 workspace dots, the date next to the clock and the weather on the left.
-- **Sleep that works on NVIDIA.** The screen comes back after waking, and on the charger the screen never turns off and the laptop never sleeps.
+- **Sleep that works on NVIDIA.** The screen comes back after waking, and on the charger the screen never locks, never turns off and the laptop never sleeps.
 - **Power profile on Fn+F5** (the ASUS fan key) with an animated OSD, like KDE's, shown instantly.
+- **Keyboard light like Armoury Crate.** Fn+F4 cycles static → breathing → color cycle → strobe, Shift+Fn+F4 cycles the color, and the brightness keys show an OSD with a brightness bar.
+- **Laptop card at login** (and on Super+Alt+L): a small blurred card slides down showing the laptop with the current wallpaper on its screen and the keyboard in its real color and mode (dark when the light is off). A second card pops up when the charger is plugged in or out. These come from a separate local project, `~/Projeler/laptop-acilis`, which is **not** in this repo; without it the two `execs.lua` lines and the bind just do nothing.
+- **VPN daemons only when used.** Proton VPN and Mullvad don't start at boot; opening their app starts the daemon.
 
 ## What's in here
 
@@ -29,26 +32,30 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 |---|---|
 | `.config/hypr/custom/` | My overrides; end-4 never overwrites this folder |
 | `custom/general.lua` | 144 Hz panel, Turkish keyboard, mouse speed, saturation shader |
-| `custom/rules.lua` | Blur behind kitty and other see-through windows |
-| `custom/execs.lua` | Cursor, starts `profile_sync.py` |
-| `custom/keybinds.lua` | Super+Alt+P display mode menu |
+| `custom/rules.lua` | Blur behind kitty and other see-through windows; Steam friends list floats; laptop/charge card placement |
+| `custom/execs.lua` | Cursor, starts `profile_sync.py`, `kbd_brightness_osd.py` and the laptop/charge cards |
+| `custom/keybinds.lua` | Super+Alt+P display mode menu, Fn+F4 / Shift+Fn+F4 keyboard light, Super+Alt+L laptop card |
 | `custom/env.lua` | NVIDIA env vars |
 | `custom/shaders/saturation.frag` | Screen saturation (`SATURATION`, 1.0 = stock) |
+| `custom/scripts/display_menu.sh` | KDE Meta+P style display menu (laptop only / external only / mirror / extend) |
+| `custom/scripts/kbd_rgb_mode.sh` | Keyboard light mode and color; saves them to `~/.local/state/kbd_rgb_mode` (needs the udev rule below) |
+| `custom/scripts/kbd_brightness_osd.py` | Brightness keys are handled in the kernel; this watches the LED and shows the keyboard OSD |
 | `custom/scripts/profile_sync.py` | Fn+F5 changes the profile in the kernel; this tells power-profiles-daemon at once so the OSD doesn't lag 2 s (started from `custom/execs.lua`) |
-| `.config/hypr/hypridle.conf` | Lock at 5 min; screen off at 10 and sleep at 15, but **not on the charger**; screen back on after waking |
+| `.config/hypr/hypridle.conf` | Lock at 5 min, screen off at 10, sleep at 15, none of them **on the charger**; screen back on after waking |
 | `.config/illogical-impulse/config.json` | Shell settings: transparency, minimal bar, date `dd.MM.yyyy`, weather city, no AI/anime sidebar tabs |
 | `.config/quickshell/ii/modules/ii/bar/` | Patched: resources group no longer overflows onto the workspaces; date next to the clock, weather left of the workspaces |
 | `.config/quickshell/ii/modules/common/Appearance.qml` | Patched: wider center bar groups (140 → 230 px) |
-| `.config/quickshell/ii/modules/ii/onScreenDisplay/` | Patched: animated power-mode OSD |
+| `.config/quickshell/ii/modules/ii/onScreenDisplay/` | Patched: animated power-mode OSD and keyboard-light OSD |
 | `.config/quickshell/ii/modules/ii/lock/Lock.qml` | Patched: if the shell restarts (Ctrl+Super+R) while locked, jump back from the temporary lock workspace (the 10-digit one) to the real one |
 | `.config/quickshell/ii/scripts/colors/switchwall.sh` | Runs the extra theming steps after a wallpaper change |
 | `.config/quickshell/ii/scripts/colors/local/fakeblur_css.py` | Fake-blur CSS for Steam (Millennium QuickCSS) and Spotify (Spicetify) |
 | `.config/matugen/` | Color templates: Discord, Zen `userChrome.css`, Spicetify, cava, GTK, KDE |
 | `.config/kitty/kitty.conf` | `background_opacity 0.6`, cursor trail on every keystroke |
 | `.config/btop/`, `.config/darklyrc`, `.config/kcmfonts` | btop on the terminal colors; see-through Qt apps; 1.15x font scale |
-| `.config/fastfetch/` | "TNFX Nord" fastfetch layout + logo, colored by the theme |
+| `.config/fastfetch/` | "TNFX Nord" fastfetch layout + logo, colored by the theme; includes system age (days since install) |
 | `.config/fish/functions/dot.fish` | `dot` = git for this repo (`dot status`, `dot add`, ...) |
 | `.local/share/applications/discord.desktop` | Discord at 1.10 scale |
+| `.local/share/applications/mullvad-vpn.desktop` | Starts `mullvad-daemon` before the app (needs the polkit rule below) |
 | `Resimler/Wallpapers/` | Wallpapers (credits below); `Resimler` is the Turkish XDG Pictures folder |
 
 ## Install
@@ -63,6 +70,23 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 3. Log in with the plain **Hyprland** session (not UWSM).
 
 `checkout -f` overwrites the files listed above. Back up your own copies first.
+
+Root-owned bits (not in the repo, add them by hand if you want those features):
+
+- Keyboard light, `/etc/udev/rules.d/90-asus-kbd-rgb.rules`:
+  ```
+  ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="/bin/chmod 0222 /sys%p/kbd_rgb_mode"
+  ```
+- VPNs only on demand: `sudo systemctl disable --now proton.VPN.service mullvad-daemon.service`. Proton's app starts its daemon itself over D-Bus. For Mullvad, `/etc/polkit-1/rules.d/49-mullvad.rules` lets your user start it without a password (replace `YOUR_USER`):
+  ```js
+  polkit.addRule(function(action, subject) {
+      if (action.id == "org.freedesktop.systemd1.manage-units" &&
+          action.lookup("unit") == "mullvad-daemon.service" && subject.user == "YOUR_USER") {
+          var verb = action.lookup("verb");
+          if (verb == "start" || verb == "stop" || verb == "restart") return polkit.Result.YES;
+      }
+  });
+  ```
 
 Optional, for the app theming: [Spicetify](https://spicetify.app) for Spotify, [Millennium](https://steambrew.app) (`millennium-git`) for Steam, and [Vencord](https://vencord.dev) for Discord (theme lands in `~/.config/Vencord/themes/`).
 

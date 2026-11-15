@@ -9,7 +9,7 @@ SPEED=1                     # 0 slow, 1 medium, 2 fast
 modes=(0 1 2 10)
 colors=("#ff0000 Kırmızı" "#ff5500 Turuncu" "#ffcc00 Sarı" "#00ff40 Yeşil" "#0050ff Mavi" "#8000ff Mor" "#ffffff Beyaz")
 state="${XDG_STATE_HOME:-$HOME/.local/state}/kbd_rgb_mode"
-read -r m c < "$state" 2>/dev/null
+read -r m c _ < "$state" 2>/dev/null  # 3. alan (#hex) laptop-acilis için
 m=${m:--1}; c=${c:-0}
 if [[ $1 == show ]]; then
     (( m < 0 )) && m=0
@@ -23,7 +23,7 @@ printf -v rgb '%d %d %d' "0x${hex:1:2}" "0x${hex:3:2}" "0x${hex:5:2}"
 led=/sys/class/leds/asus::kbd_backlight
 if [[ $1 != show ]]; then
     echo "1 ${modes[m]} $rgb $SPEED" > $led/kbd_rgb_mode || exit 1
-    echo "$m $c" > "$state"
+    echo "$m $c $hex" > "$state"
 fi
 qs -c ii ipc call osdKeyboard update "$m" "$hex" "$cname" "$(cat $led/brightness)" >/dev/null 2>&1 \
     || notify-send -a Klavye -t 1500 "Klavye ışığı" "$cname"
