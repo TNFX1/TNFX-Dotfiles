@@ -18,8 +18,12 @@ if test -f $_th; and begin; not test -f $_lg; or test $_th -nt $_lg; end
     end
     magick ~/.config/fastfetch/logo.png -background none \( +clone -alpha off -colorspace gray -level 35%,85% -colorspace sRGB +level-colors "$_sh[1]","$_sh[3]" \) +swap -compose CopyOpacity -composite $_lg
     # Napoleon wallpapers: logo wears Napoleon's bicorne
-    if string match -qi '*napoleon*' -- (jq -r .background.wallpaperPath ~/.config/illogical-impulse/config.json)
+    set -l _wp (jq -r .background.wallpaperPath ~/.config/illogical-impulse/config.json)
+    if string match -qi '*napoleon*' -- $_wp
         magick $_lg -resize 80% -background none -gravity northwest -extent 512x512-51-102 ~/.config/fastfetch/napoleon-hat.png -geometry +92+57 -composite $_lg
+    else if string match -qi '*ataturk*' -- $_wp
+        # Atatürk wallpapers: logo wears his Milli Mücadele kalpak (kalpak.png = rsvg-convert of kalpak.svg, made by gen_kalpak.py)
+        magick $_lg -resize 80% -background none -gravity northwest -extent 512x512-51-102 ~/.config/fastfetch/kalpak.png -geometry +140+36 -composite $_lg
     end
     set -l _rgb (string join ';' (math 0x(string sub -s 2 -l 2 $_sh[2])) (math 0x(string sub -s 4 -l 2 $_sh[2])) (math 0x(string sub -s 6 -l 2 $_sh[2])))
     set -l _rgb2 (string join ';' (math 0x(string sub -s 2 -l 2 $_sh[3])) (math 0x(string sub -s 4 -l 2 $_sh[3])) (math 0x(string sub -s 6 -l 2 $_sh[3])))
