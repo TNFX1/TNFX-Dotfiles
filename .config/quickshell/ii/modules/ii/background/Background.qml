@@ -102,13 +102,13 @@ Variants {
         property string shownPath: wallpaperPath
         property string pendingPath: ""
         function startWallpaperTransition() {
-            if (wallpaperIsVideo || wallpaperSafetyTriggered || wallpaper.status !== Image.Ready || !bgRoot.visible) {
+            if (wallpaperIsVideo || wallpaperSafetyTriggered || wallpaper.status !== Image.Ready || !wallpaper.visible || !bgRoot.visible) {
                 shownPath = wallpaperPath;
                 return;
             }
             pendingPath = wallpaperPath;
             const geo = Qt.rect(wallpaper.x, wallpaper.y, wallpaper.width, wallpaper.height);
-            wallpaper.grabToImage(result => {
+            const grabbing = wallpaper.grabToImage(result => {
                 revealAnim.stop();
                 oldWallpaper.x = geo.x; oldWallpaper.y = geo.y;
                 oldWallpaper.width = geo.width; oldWallpaper.height = geo.height;
@@ -117,6 +117,7 @@ Variants {
                 oldWallpaper.visible = true;
                 bgRoot.shownPath = bgRoot.pendingPath;
             });
+            if (!grabbing) shownPath = wallpaperPath;
         }
 
         // Wallpaper zoom scale

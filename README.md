@@ -20,6 +20,8 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 - **One theme everywhere.** Changing the wallpaper recolors the shell, kitty, btop, cava, fastfetch, GTK/Qt, Zen, Discord, Spotify and Steam.
 - **Same transparency everywhere.** Everything is about 60% opaque, like the bar. Steam and Spotify can't be truly see-through, so they get a fake blur: a blurred copy of the wallpaper drawn behind their panels.
 - **Wallpaper transition.** A new wallpaper opens as a growing circle from the middle of the screen.
+- **Live wallpapers.** Videos (mp4/webm/mkv/mov) show up in the wallpaper picker with a **LIVE** badge and play through mpvpaper (paused while windows cover them); the theme comes from the first frame. Needs `mpvpaper`. Videos are not in this repo.
+- **Napoleon's hat.** On a wallpaper whose name contains `napoleon`, the fastfetch logo wears Napoleon's bicorne (drawn after David's *Napoleon Crossing the Alps*).
 - **Minimal floating bar** with 5 workspace dots, the date next to the clock and the weather on the left.
 - **Sleep that works on NVIDIA.** The screen comes back after waking, and on the charger the screen never locks, never turns off and the laptop never sleeps.
 - **Power profile on Fn+F5** (the ASUS fan key) with an animated OSD, like KDE's, shown instantly.
@@ -48,12 +50,14 @@ My Hyprland setup on CachyOS: [end-4/dots-hyprland](https://github.com/end-4/dot
 | `.config/quickshell/ii/modules/ii/onScreenDisplay/` | Patched: animated power-mode OSD and keyboard-light OSD |
 | `.config/quickshell/ii/modules/ii/background/Background.qml` | Patched: circle-reveal transition when the wallpaper changes |
 | `.config/quickshell/ii/modules/ii/lock/Lock.qml` | Patched: if the shell restarts (Ctrl+Super+R) while locked, jump back from the temporary lock workspace (the 10-digit one) to the real one |
-| `.config/quickshell/ii/scripts/colors/switchwall.sh` | Runs the extra theming steps after a wallpaper change |
+| `.config/quickshell/ii/scripts/colors/switchwall.sh` | Runs the extra theming steps after a wallpaper change; mpvpaper auto-pauses when hidden |
+| `.config/quickshell/ii/services/Wallpapers.qml`, `modules/ii/wallpaperSelector/WallpaperDirectoryItem.qml` | Patched: picker lists videos, with a LIVE badge |
+| `.config/quickshell/ii/scripts/thumbnails/generate-thumbnails-magick.sh` | Patched: video thumbnails (first frame, ffmpeg) |
 | `.config/quickshell/ii/scripts/colors/local/fakeblur_css.py` | Fake-blur CSS for Steam (Millennium QuickCSS) and Spotify (Spicetify) |
 | `.config/matugen/` | Color templates: Discord, Zen `userChrome.css`, Spicetify, cava, GTK, KDE |
 | `.config/kitty/kitty.conf` | `background_opacity 0.6`, cursor trail on every keystroke |
 | `.config/btop/`, `.config/darklyrc`, `.config/kcmfonts` | btop on the terminal colors; see-through Qt apps; 1.15x font scale |
-| `.config/fastfetch/` | "TNFX Nord" fastfetch layout + logo, colored by the theme; includes system age (days since install) |
+| `.config/fastfetch/` | "TNFX Nord" fastfetch layout + logo, colored by the theme; includes system age (days since install); `napoleon-hat.svg/png` + `.config/fish/config.fish` put the hat on the logo |
 | `.config/fish/functions/dot.fish` | `dot` = git for this repo (`dot status`, `dot add`, ...) |
 | `.local/share/applications/discord.desktop` | Discord at 1.10 scale |
 | `Resimler/Wallpapers/` | Wallpapers (credits below); `Resimler` is the Turkish XDG Pictures folder |
@@ -86,7 +90,8 @@ Updating end-4's dots can overwrite the patched files outside `custom/`. Run `do
 
 Wallpapers belong to their artists. Sources:
 - [dharmx/walls](https://github.com/dharmx/walls) (`nord-*`, `anime-*`, nature set)
-- [D3Ext/aesthetic-wallpapers](https://github.com/D3Ext/aesthetic-wallpapers) (`cyberpunk_car`, `dark_skulls`, `rad_samurai`, `vader`, `neon-car2`, `oled-mountains`, `rm-rf`)
+- [D3Ext/aesthetic-wallpapers](https://github.com/D3Ext/aesthetic-wallpapers) (`cyberpunk_car`, `rad_samurai`, `neon-car2`, `oled-mountains`, `rm-rf`)
+- [Wikimedia Commons](https://commons.wikimedia.org), public-domain paintings: `napoleon-austerlitz` (Gérard), `napoleon-coronation` and `napoleon-crossing-alps` (David), `napoleon-eylau` (Gros), `napoleon-jena` (after Vernet), `liberty-leading-the-people` (Delacroix), `washington-crossing-delaware` (Leutze), `fighting-temeraire` (Turner)
 - [wallhaven.cc](https://wallhaven.cc) (the rest)
 
 If you made one of these and want it removed or credited, open an issue.

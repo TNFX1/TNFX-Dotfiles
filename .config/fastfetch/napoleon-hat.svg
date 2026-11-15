@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="220" viewBox="0 0 400 220">
+  <!-- Napoleon's bicorne as in David's "Napoleon Crossing the Alps": worn sideways, long left tip
+       drooping over the shoulder, wide gold braid along the upper edge, cockade with a gold loop -->
+  <defs>
+    <linearGradient id="felt" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#1d2440"/>
+      <stop offset="0.55" stop-color="#121729"/>
+      <stop offset="1" stop-color="#07090f"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3d77a"/>
+      <stop offset="0.45" stop-color="#c99a2e"/>
+      <stop offset="1" stop-color="#8a6416"/>
+    </linearGradient>
+    <radialGradient id="sheen" cx="0.55" cy="0.35" r="0.5">
+      <stop offset="0" stop-color="#3a4570" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#3a4570" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- outer silhouette = gold braid -->
+  <path id="outer" d="M14,212 C50,160 96,50 214,12 C284,6 338,60 392,118
+                      C334,128 284,148 232,158 C150,170 82,184 14,212 Z"
+        fill="url(#gold)" stroke="#5c430e" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- felt, inset under the braid -->
+  <path d="M44,196 C80,150 118,74 218,40 C278,36 320,76 362,118
+           C320,130 278,146 232,154 C152,166 92,178 44,196 Z"
+        fill="url(#felt)"/>
+  <path d="M44,196 C80,150 118,74 218,40 C278,36 320,76 362,118
+           C320,130 278,146 232,154 C152,166 92,178 44,196 Z"
+        fill="url(#sheen)"/>
+  <!-- braid texture: woven stitches along the band -->
+  <path d="M29,204 C65,155 107,62 216,26 C281,21 329,68 378,118"
+        fill="none" stroke="#7a5812" stroke-opacity="0.7" stroke-width="12" stroke-dasharray="2 4"/>
+  <path d="M29,204 C65,155 107,62 216,26 C281,21 329,68 378,118"
+        fill="none" stroke="#ffe9a0" stroke-opacity="0.35" stroke-width="2"/>
+  <path d="M44,196 C80,150 118,74 218,40 C278,36 320,76 362,118"
+        fill="none" stroke="#6b4d10" stroke-width="2"/>
+  <!-- brim fold shadow -->
+  <path d="M70,178 C130,160 190,150 232,146 C280,138 320,126 350,118"
+        fill="none" stroke="#000" stroke-opacity="0.45" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- cockade: blue / white / red rosette with pleated red ring -->
+  <circle cx="246" cy="84" r="33" fill="#c21e2a" stroke="#7a0f17" stroke-width="2"/>
+  <circle cx="246" cy="84" r="33" fill="none" stroke="#e8414c" stroke-width="3" stroke-dasharray="3 4"/>
+  <circle cx="246" cy="84" r="22" fill="#eef0f2"/>
+  <circle cx="246" cy="84" r="12" fill="#1f3f9e"/>
+  <!-- gold loop (ganse) over the cockade, with button -->
+  <path d="M241,30 L251,30 L252,118 L240,118 Z" fill="url(#gold)" stroke="#5c430e" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M246,34 L246,114" stroke="#7a5812" stroke-opacity="0.7" stroke-width="2" stroke-dasharray="2 3"/>
+  <ellipse cx="246" cy="124" rx="8" ry="7" fill="url(#gold)" stroke="#5c430e" stroke-width="2"/>
+</svg>
