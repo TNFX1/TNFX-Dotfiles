@@ -9,7 +9,7 @@ import Quickshell
 import Quickshell.Io
 
 // LOCAL ADDITION (not in dots): home server (CasaOS) status for the left sidebar.
-// shortcut: only reachability checks from the laptop; disk/RAM/temps need SSH without passphrase or an agent on the server.
+// Stats come over `ssh sunucu` (passphrase-less ~/.ssh/id_claude); docker CLI hangs on the server, so the API socket is used.
 Item {
     id: root
 
@@ -32,6 +32,36 @@ Item {
         checking = true;
         checker.buffer = {};
         checker.running = true;
+        if (!stats.running) { stats.buffer = {}; stats.running = true; }
+    }
+
+    property var sys: ({}) // key -> [numbers], from the server over SSH
+    function pct(a) { return a && a[1] > 0 ? a[0] / a[1] : 0; }
+    function gb(b) { return (b / 1e9).toFixed(b < 1e10 ? 1 : 0); }
+    function uptime(sec) {
+        const d = Math.floor(sec / 86400), h = Math.floor(sec % 86400 / 3600), m = Math.floor(sec % 3600 / 60);
+        return d > 0 ? `${d} g ${h} sa` : h > 0 ? `${h} sa ${m} dk` : `${m} dk`;
+    }
+
+    // Each line: "<key> <n> [<n>]"
+    Process {
+        id: stats
+        property var buffer: ({})
+        command: ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=5", "sunucu", `
+            read l _ < /proc/loadavg; echo "load $l $(nproc)"
+            awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} END{print "mem", (t-a)*1024, t*1024}' /proc/meminfo
+            df -B1 --output=used,size / | tail -1 | sed 's/^ */disk /'
+            echo "temp $(cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null || echo 0)"
+            echo "up $(cut -d' ' -f1 /proc/uptime)"
+            j=$(timeout 5 curl -s --unix-socket /var/run/docker.sock 'http://x/containers/json?all=1')
+            echo "ctr $(printf %s "$j" | grep -o '"State":"running"' | wc -l) $(printf %s "$j" | grep -o '"State":"' | wc -l)"`]
+        stdout: SplitParser {
+            onRead: line => {
+                const [k, ...v] = line.trim().split(/ +/);
+                stats.buffer[k] = v.map(Number);
+            }
+        }
+        onExited: (code) => root.sys = code === 0 ? stats.buffer : {}
     }
 
     // Each line: "<id> <ok 0|1> <ms>"
@@ -120,6 +150,59 @@ Item {
                         Behavior on rotation { NumberAnimation { duration: 400 } }
                     }
                     StyledToolTip { text: "Yenile" }
+                }
+            }
+        }
+
+        // System card (hidden until the SSH stats arrive)
+        Rectangle {
+            visible: root.sys.mem !== undefined
+            Layout.fillWidth: true
+            implicitHeight: sysCol.implicitHeight + 24
+            radius: Appearance.rounding.normal
+            color: Appearance.colors.colLayer2
+
+            ColumnLayout {
+                id: sysCol
+                anchors.fill: parent
+                anchors.margins: 12
+                spacing: 6
+                Repeater {
+                    model: [
+                        { icon: "memory", name: "İşlemci yükü", v: root.sys.load ? root.sys.load[0] / root.sys.load[1] : 0,
+                          text: root.sys.load ? `${root.sys.load[0].toFixed(2)} / ${root.sys.load[1]} çekirdek` : "" },
+                        { icon: "memory_alt", name: "RAM", v: root.pct(root.sys.mem),
+                          text: root.sys.mem ? `${root.gb(root.sys.mem[0])} / ${root.gb(root.sys.mem[1])} GB` : "" },
+                        { icon: "hard_drive", name: "Disk", v: root.pct(root.sys.disk),
+                          text: root.sys.disk ? `${root.gb(root.sys.disk[0])} / ${root.gb(root.sys.disk[1])} GB` : "" },
+                    ]
+                    delegate: ColumnLayout {
+                        required property var modelData
+                        Layout.fillWidth: true
+                        spacing: 2
+                        RowLayout {
+                            Layout.fillWidth: true
+                            MaterialSymbol { text: modelData.icon; iconSize: 18; color: Appearance.colors.colOnLayer1 }
+                            StyledText { Layout.fillWidth: true; text: modelData.name; color: Appearance.colors.colOnLayer1 }
+                            StyledText { text: modelData.text; color: Appearance.colors.colSubtext; font.pixelSize: Appearance.font.pixelSize.smaller }
+                        }
+                        StyledProgressBar {
+                            Layout.fillWidth: true
+                            value: Math.min(modelData.v, 1)
+                            highlightColor: modelData.v > 0.85 ? Appearance.colors.colError : Appearance.colors.colPrimary
+                        }
+                    }
+                }
+                StyledText {
+                    Layout.fillWidth: true
+                    Layout.topMargin: 2
+                    text: [
+                        root.sys.up ? `Açık ${root.uptime(root.sys.up[0])}` : "",
+                        root.sys.temp?.[0] > 0 ? `${Math.round(root.sys.temp[0] / 1000)}°C` : "",
+                        root.sys.ctr ? `Konteyner ${root.sys.ctr[0]}/${root.sys.ctr[1]}` : "",
+                    ].filter(x => x).join(" · ")
+                    color: Appearance.colors.colSubtext
+                    font.pixelSize: Appearance.font.pixelSize.small
                 }
             }
         }
