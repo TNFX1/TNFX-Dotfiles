@@ -174,7 +174,7 @@
         "verbose": false,
         "vertical": false,
         "weather": {
-            "city": "Altınordu Ordu",
+            "city": "Altinordu Ordu",
             "enable": true,
             "enableGPS": false,
             "fetchInterval": 10,
