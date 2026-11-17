@@ -9,7 +9,7 @@ import Quickshell
 import Quickshell.Io
 
 // LOCAL ADDITION (not in dots): home server (CasaOS) status for the left sidebar.
-// Stats come over `ssh sunucu` (passphrase-less ~/.ssh/id_claude); docker CLI hangs on the server, so the API socket is used.
+// Stats come over `ssh sunucu-stats` (~/.ssh/config); its key can only run ~/homelab-stats.sh on the server.
 Item {
     id: root
 
@@ -20,6 +20,7 @@ Item {
         { id: "searxng", name: "SearXNG", icon: "search", port: 8080, path: "healthz" }, // "/" counts toward SearXNG's rate limiter
         { id: "nextcloud", name: "Nextcloud", icon: "cloud", port: 7580 },
         { id: "kuma", name: "Uptime Kuma", icon: "monitor_heart", port: 3002 },
+        { id: "vault", name: "Vaultwarden", icon: "key", port: 8444, https: true, path: "alive" }, // Caddy, self-signed Homelab CA
         { id: "dns", name: "AdGuard Home", icon: "shield", port: 53, webPort: 7200 }, // checked via DNS query, UI on webPort
     ]
     property var status: ({}) // id -> { ok: bool, ms: int }
@@ -47,14 +48,8 @@ Item {
     Process {
         id: stats
         property var buffer: ({})
-        command: ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=5", "sunucu", `
-            read l _ < /proc/loadavg; echo "load $l $(nproc)"
-            awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} END{print "mem", (t-a)*1024, t*1024}' /proc/meminfo
-            df -B1 --output=used,size / | tail -1 | sed 's/^ */disk /'
-            echo "temp $(cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null || echo 0)"
-            echo "up $(cut -d' ' -f1 /proc/uptime)"
-            j=$(timeout 5 curl -s --unix-socket /var/run/docker.sock 'http://x/containers/json?all=1')
-            echo "ctr $(printf %s "$j" | grep -o '"State":"running"' | wc -l) $(printf %s "$j" | grep -o '"State":"' | wc -l)"`]
+        // Key is locked to ~/homelab-stats.sh on the server (forced command in authorized_keys), so no remote command is sent
+        command: ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=5", "sunucu-stats"]
         stdout: SplitParser {
             onRead: line => {
                 const [k, ...v] = line.trim().split(/ +/);
@@ -72,10 +67,10 @@ Item {
             export LC_ALL=C # ping prints "süre=" under Turkish locale
             h='${root.host}'
             ms() { awk -v t="$1" 'BEGIN{printf "%d", t*1000}'; }
-            http() { r=$(curl -s -o /dev/null -m 3 -w '%{http_code} %{time_total}' "http://$h:$2/$3"); c=\${r%% *}; [ "$c" != 000 ] && o=1 || o=0; echo "$1 $o $(ms \${r#* })"; }
+            http() { r=$(curl -sk -o /dev/null -m 3 -w '%{http_code} %{time_total}' "$3://$h:$2/$4"); c=\${r%% *}; case $c in [234]??) o=1;; *) o=0;; esac; echo "$1 $o $(ms \${r#* })"; }
             ( p=$(ping -c1 -W1 "$h" | sed -n 's/.*time=\\([0-9.]*\\).*/\\1/p'); [ -n "$p" ] && echo "ping 1 \${p%.*}" || echo "ping 0 0" ) &
             ( s=$(date +%s%N); a=$(dig +short +time=2 +tries=1 @"$h" example.com A); e=$(( ($(date +%s%N)-s)/1000000 )); [ -n "$a" ] && echo "dns 1 $e" || echo "dns 0 0" ) &
-            ${root.services.filter(s => s.id !== "dns").map(s => `http ${s.id} ${s.port} ${s.path ?? ""} &`).join("\n")}
+            ${root.services.filter(s => s.id !== "dns").map(s => `http ${s.id} ${s.port} ${s.https ? "https" : "http"} ${s.path ?? ""} &`).join("\n")}
             wait`]
         stdout: SplitParser {
             onRead: line => {
@@ -218,10 +213,9 @@ Item {
                 id: row
                 required property var modelData
                 readonly property var st: root.status[modelData.id]
-                readonly property bool isWeb: true
                 Layout.fillWidth: true
                 implicitHeight: 48
-                onClicked: Quickshell.execDetached(["xdg-open", `http://${root.host}:${modelData.webPort ?? modelData.port}/`])
+                onClicked: Quickshell.execDetached(["xdg-open", `${modelData.https ? "https" : "http"}://${root.host}:${modelData.webPort ?? modelData.port}/`])
                 contentItem: RowLayout {
                     anchors.fill: parent
                     anchors.leftMargin: 10
@@ -257,7 +251,6 @@ Item {
                             : row.st.ok ? Appearance.colors.colPrimary : Appearance.colors.colError
                     }
                     MaterialSymbol {
-                        opacity: row.isWeb ? 1 : 0 // keep the dots aligned
                         text: "open_in_new"
                         iconSize: 18
                         color: Appearance.colors.colSubtext
